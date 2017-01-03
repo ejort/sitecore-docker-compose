@@ -1,0 +1,31 @@
+version: "2.1"
+services:
+  mongo:
+    image: mongo:windowsservercore
+  mssql:
+    image: microsoft/mssql-server-windows-express:latest
+    expose:
+    - "1433"
+    environment:
+    - sa_password=Password1
+    - ACCEPT_EULA=Y
+    - attach_dbs="[{'dbName':'Sitecore_Analytics','dbFiles':['C:\\dbs\\Sitecore.Analytics.mdf','C:\\dbs\\Sitecore.Analytics.ldf']},{'dbName':'Sitecore_Core','dbFiles':['C:\\dbs\\Sitecore.Core.mdf','C:\\dbs\\Sitecore.Core.ldf']},{'dbName':'Sitecore_Master','dbFiles':['C:\\dbs\\Sitecore.Master.mdf','C:\\dbs\\Sitecore.Master.ldf']},{'dbName':'Sitecore_Sessions','dbFiles':['C:\\dbs\\Sitecore.Sessions.mdf','C:\\dbs\\Sitecore.Sessions.ldf']},{'dbName':'Sitecore_Web','dbFiles':['C:\\dbs\\Sitecore.Web.mdf','C:\\dbs\\Sitecore.Web.ldf']}]" 
+    volumes:
+    - ./Sitecore/Databases:C:/dbs/
+  web:
+    build: ./web    
+    ports:
+    - "8000:8000"
+    volumes:
+    - ./Sitecore/Website:C:/site/
+    - ./Sitecore/Data:C:/site-data/
+    depends_on:
+    - mssql
+    - mongo
+    links:
+    - mssql
+    - mongo
+networks:
+  default:
+    external:
+      name: nat
