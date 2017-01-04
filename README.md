@@ -10,8 +10,8 @@ Could definitely be made better, but it works :)
 2. Download Sitecore distribution
 3. Unzip as *Sitecore* in root of repo
 4. Copy license.xml into Sitecore\Data
-5. Copy Connectionstrings.config -> Sitecore\Website\App_Config
-6. Copy z.DockerConfig.config -> Sitecore\Website\App_Config\Include
+5. Copy web\Connectionstrings.config -> Sitecore\Website\App_Config
+6. Copy web\z.DockerConfig.config -> Sitecore\Website\App_Config\Include
 
 
 ## Usage
